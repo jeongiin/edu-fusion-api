@@ -2,27 +2,18 @@ from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
-from pydantic import BaseModel
-from typing import Optional
+from langchain.document_loaders import PyPDFLoader
+from langchain.indexes import VectorstoreIndexCreator
 import sys
 import os
+import models
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from app.answer_generator import *
+from apikey import OPENAI_API_KEY
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+loader = PyPDFLoader('/Users/timdalxx/2023_PROJECT/edu-fusion-api/app/data/자료실/[이슈 레포트] 업무활용편_ChatGPT 활용사례 및 활용 팁_최종버전.pdf')
+index = VectorstoreIndexCreator().from_loaders([loader])
 
-
-class UserRequest(BaseModel):
-    request_type: Optional[str] # answer, quiz, recap, debat 
-    request_contents: Optional[str] = '' # debat, answer 요청일 때만 활성화
-    recap_option: Optional[int] = -1 # recap 요청일 때만 활성화, 몇 줄로 요약?
-    quize_option: Optional[int] = -1 # quiz 요청일 때만 활성화, 몇 개의 퀴즈 생성?
-
-
-class TextResult(BaseModel):
-    emotion: Optional[str] = "" # happy, sad ...
-    txt_result: Optional[str] = "" # answer, dabat, recap
-
-class QuizResult(BaseModel):
-    quiz_list: Optional[list] = [] # quize
 
 
 app = FastAPI()
@@ -30,7 +21,7 @@ app = FastAPI()
 @app.post("/answer")
 async def make_answer(user_request: UserRequest):
     global g_answer
-    g_answer = generate_answer(user_request)
+    g_answer = generate_answer(user_request, index)
     converted_answer = jsonable_encoder(g_answer)
     return JSONResponse(content=converted_answer)
 
