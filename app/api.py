@@ -6,15 +6,14 @@ from langchain.document_loaders import PyPDFLoader
 from langchain.indexes import VectorstoreIndexCreator
 import sys
 import os
-import models
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-from app.answer_generator import *
+from answer_generator import *
+from recap_generator import *
 from apikey import OPENAI_API_KEY
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-loader = PyPDFLoader('/Users/timdalxx/2023_PROJECT/edu-fusion-api/app/data/자료실/[이슈 레포트] 업무활용편_ChatGPT 활용사례 및 활용 팁_최종버전.pdf')
+base_file_path = '/Users/timdalxx/2023_PROJECT/edu-fusion-api/app/data/자료실/[이슈 레포트] 업무활용편_ChatGPT 활용사례 및 활용 팁_최종버전.pdf'
+loader = PyPDFLoader(base_file_path)
 index = VectorstoreIndexCreator().from_loaders([loader])
-
-
 
 app = FastAPI()
 

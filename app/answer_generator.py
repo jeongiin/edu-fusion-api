@@ -1,6 +1,8 @@
 from langchain.chat_models import ChatOpenAI
 from langchain.document_loaders import PyPDFLoader
 from langchain.indexes import VectorstoreIndexCreator
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.document_loaders import TextLoader
 from apikey import OPENAI_API_KEY
 import os
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY # openai 에서 발급 받은 key 입력
@@ -22,9 +24,14 @@ def generate_answer(user_request: UserRequest, index) -> TextResult:
      
 
 if __name__ == '__main__':
-    loader = PyPDFLoader('/Users/timdalxx/2023_PROJECT/edu-fusion-api/app/data/자료실/[이슈 레포트] 업무활용편_ChatGPT 활용사례 및 활용 팁_최종버전.pdf')
-    index = VectorstoreIndexCreator().from_loaders([loader])
+    # base_file_path = '/Users/timdalxx/2023_PROJECT/edu-fusion-api/app/data/디지털_트렌드/디지털트렌드_1. 메타버스.pdf'
+    base_file_path = '/Users/timdalxx/2023_PROJECT/edu-fusion-api/app/data/시니어_디지털_범죄/메신저 피싱.txt'
+    if ".pdf" in base_file_path:
+        loader = PyPDFLoader(base_file_path)
+    elif ".txt" in base_file_path:
+        loader = TextLoader(base_file_path)
 
+    index = VectorstoreIndexCreator().from_loaders([loader])
     while True:
             user_input = input("Enter a query: ")
             if user_input == "exit":
