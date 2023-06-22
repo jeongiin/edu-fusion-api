@@ -11,7 +11,7 @@ class UserRequest(BaseModel):
 
 class TextResult(BaseModel):
     emotion: Optional[str] = "" # happy, sad ...
-    txt_result: Optional[str] = "" # answer, dabat, recap
+    txt_result: Optional[str] = "" # when answer, dabat, recap
 
 class QuizResult(BaseModel):
-    quiz_list: Optional[list] = [] # quize
+    quiz_list: Optional[dict] = {} # quize
