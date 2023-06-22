@@ -31,13 +31,20 @@ async def make_recap(user_request: UserRequest):
     converted_recap = jsonable_encoder(g_recap)
     return JSONResponse(content=converted_recap)
 
-@app.post("/debat")
-async def make_debat(user_request: UserRequest):
-    # pdf 주제 찾기 -> 해당 주제에 대해 토론
-    global g_debat
-    g_debat = generate_debat(user_request)
-    converted_debat = jsonable_encoder(g_debat)
-    return JSONResponse(content=converted_debat)
+@app.post("/quiz")
+async def make_quiz(user_request: UserRequest):
+    global g_answer
+    g_answer = generate_quiz(user_request)
+    converted_quiz = jsonable_encoder(g_answer)
+    return JSONResponse(content=converted_quiz)
+
+# @app.post("/debat")
+# async def make_debat(user_request: UserRequest):
+#     # pdf 주제 찾기 -> 해당 주제에 대해 토론
+#     global g_debat
+#     g_debat = generate_debat(user_request)
+#     converted_debat = jsonable_encoder(g_debat)
+#     return JSONResponse(content=converted_debat)
 
 
 origins = [
