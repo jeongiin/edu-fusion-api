@@ -14,4 +14,4 @@ class TextResult(BaseModel):
     txt_result: Optional[str] = "" # when answer, dabat, recap
 
 class QuizResult(BaseModel):
-    quiz_list: Optional[dict] = {} # quize
+    quiz_dict: Optional[dict] = {} # quize

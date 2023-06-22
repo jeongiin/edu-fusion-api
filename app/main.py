@@ -9,6 +9,7 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from answer_generator import *
 from recap_generator import *
+from quiz_generator import *
 from apikey import OPENAI_API_KEY
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 base_file_path = '/Users/timdalxx/2023_PROJECT/edu-fusion-api/app/data/자료실/[이슈 레포트] 업무활용편_ChatGPT 활용사례 및 활용 팁_최종버전.pdf'
@@ -20,7 +21,7 @@ app = FastAPI()
 @app.post("/answer")
 async def make_answer(user_request: UserRequest):
     global g_answer
-    g_answer = generate_answer(user_request, index)
+    g_answer = generate_answer(user_request)
     converted_answer = jsonable_encoder(g_answer)
     return JSONResponse(content=converted_answer)
 
@@ -33,9 +34,9 @@ async def make_recap(user_request: UserRequest):
 
 @app.post("/quiz")
 async def make_quiz(user_request: UserRequest):
-    global g_answer
-    g_answer = generate_quiz(user_request)
-    converted_quiz = jsonable_encoder(g_answer)
+    global g_quiz
+    g_quiz = generate_quiz(user_request)
+    converted_quiz = jsonable_encoder(g_quiz)
     return JSONResponse(content=converted_quiz)
 
 # @app.post("/debat")

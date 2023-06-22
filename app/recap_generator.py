@@ -76,7 +76,7 @@ def generate_init_recap(base_file_path: str) -> str:
 
 def generate_recap(user_request: UserRequest) -> TextResult:
      answer_result = TextResult()
-     base_file_path = os.path.join(os.getcwd(),"app", "data", user_request.edu_class_folder_name, user_request.edu_title_file_name) 
+     base_file_path = os.path.join(os.getcwd(), "data", user_request.edu_class_folder_name, user_request.edu_title_file_name) 
      generated_recap = generate_init_recap(base_file_path = base_file_path)
      fommated_recap = format_recap(unformated_recap = generated_recap)
      # pdf 를 기반으로 답변 생성

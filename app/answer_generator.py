@@ -9,9 +9,15 @@ os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY # openai 에서 발급 받은 key 
 from models import UserRequest, TextResult
 
 
-def generate_answer(user_request: UserRequest, index) -> TextResult:
+def generate_answer(user_request: UserRequest) -> TextResult:
      answer_result = TextResult()
-
+     user_input = user_request.request_contents
+     base_file_path = os.path.join(os.getcwd(), "data", user_request.edu_class_folder_name, user_request.edu_title_file_name) 
+     if ".pdf" in base_file_path:
+         loader = PyPDFLoader(base_file_path)
+     elif ".txt" in base_file_path:
+         loader = TextLoader(base_file_path)
+     index = VectorstoreIndexCreator().from_loaders([loader])
      # pdf 를 기반으로 답변 생성
      try:
         response = index.query(llm = ChatOpenAI(model_name = 'gpt-3.5-turbo'), question = user_input, chain_type = "stuff")
