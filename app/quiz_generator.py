@@ -1,10 +1,9 @@
 import os
 import openai
-from utils import en_to_ko, save_txt_file
 from os import path
-from models import TextResult, QuizResult
-from apikey import OPENAI_API_KEY
-from recap_generator import *
+from app.models import TextResult, QuizResult
+from app.apikey import OPENAI_API_KEY
+from app.recap_generator import *
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
     
@@ -16,7 +15,7 @@ def generate_init_quiz(recap: str) -> str:
             {객관식 보기 내용}은 명사형 종결 어미로 만들어. \n \
             퀴즈가 많다면 '\n'로 구별해줘. \
             [퀴즈 형식]\n \
-            {퀴즈 번호}\t '{퀴즈 문제}'\t '['{객관식 보기 내용}', '{객관식 보기 내용}','{객관식 보기 내용}', '{객관식 보기 내용}']' \t {해당 문제의 답}" \
+            {퀴즈 번호}\t '{퀴즈 문제}'\t ['{객관식 보기 내용}', '{객관식 보기 내용}','{객관식 보기 내용}', '{객관식 보기 내용}'] \t {해당 문제의 답}" \
             + "\n [내용] \n"
 
     prompt += recap
@@ -42,7 +41,7 @@ def generate_init_quiz(recap: str) -> str:
 
 def generate_quiz(user_request: UserRequest) -> TextResult:
     answer_result = QuizResult()
-    base_file_path = os.path.join(os.getcwd(), "data", user_request.edu_class_folder_name, user_request.edu_title_file_name) 
+    base_file_path = os.path.join(os.getcwd(), "app", "data", user_request.edu_class_folder_name, user_request.edu_title_file_name)
     quizzes = {}
     try:
         init_recap = generate_init_recap(base_file_path=base_file_path)
