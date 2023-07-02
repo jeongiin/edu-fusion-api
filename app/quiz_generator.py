@@ -1,10 +1,8 @@
 import os
-import openai
-from os import path
 from app.models import TextResult, QuizResult
 from app.apikey import OPENAI_API_KEY
 from app.recap_generator import *
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+from app.chatgpt import *
 
     
 def generate_init_quiz(recap: str) -> str:
@@ -20,8 +18,6 @@ def generate_init_quiz(recap: str) -> str:
 
     prompt += recap
     
-    # openai API 키 인증
-    openai.api_key = OPENAI_API_KEY
 
     # 메시지 설정하기
     messages = [
@@ -29,12 +25,8 @@ def generate_init_quiz(recap: str) -> str:
             {"role": "user", "content": prompt}
     ]
 
-    # ChatGPT API 호출하기
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages
-    )
-    answer = response['choices'][0]['message']['content']
+    answer = ChatGPT(messages=messages)
+
     
     return answer
 

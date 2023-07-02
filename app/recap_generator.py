@@ -11,17 +11,14 @@ import openai
 from os import path
 from app.utils import en_to_ko, save_txt_file
 from app.models import UserRequest, TextResult
+from app.chatgpt import *
 from app.apikey import OPENAI_API_KEY
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 def format_recap(unformated_recap: str) -> str:
     # 어투 설정, 자연스러운 번역
     # unformated_recap = en_to_ko(unformated_recap) # 보다 chatGPT가 더 매끄럽게 번역함
     prompt = '공손한 어투의 한국어로 자연스럽게 작성해줘.' + "\n === \n"
     prompt += unformated_recap
-    
-    # openai API 키 인증
-    openai.api_key = OPENAI_API_KEY
 
     # 메시지 설정하기
     messages = [
@@ -29,12 +26,7 @@ def format_recap(unformated_recap: str) -> str:
             {"role": "user", "content": prompt}
     ]
 
-    # ChatGPT API 호출하기
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages
-    )
-    answer = response['choices'][0]['message']['content']
+    answer = ChatGPT(messages=messages)
     
     return answer
 
