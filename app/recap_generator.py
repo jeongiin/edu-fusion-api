@@ -11,16 +11,19 @@ import openai
 from os import path
 
 ## for docker build
-# from app.utils import *
-# from app.models import UserRequest, TextResult
-# from app.chatgpt import *
-# from app.apikey import OPENAI_API_KEY
+from app.utils import *
+from app.models import UserRequest, TextResult
+from app.chatgpt import *
+from app.apikey import OPENAI_API_KEY
 
 ## for develop environment
-from utils import *
-from models import UserRequest, TextResult
-from chatgpt import *
-from apikey import OPENAI_API_KEY
+# from utils import *
+# from models import UserRequest, TextResult
+# from chatgpt import *
+# from apikey import OPENAI_API_KEY
+
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY # openai 에서 발급 받은 key 입력
+
 
 def format_recap(unformated_recap: str, base_file_path: str) -> str:
     # 어투 설정, 자연스러운 번역
