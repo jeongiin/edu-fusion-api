@@ -54,6 +54,8 @@ origins = [
     "http://0.0.0.0:80",
     "http://localhost",
     "http://localhost:3000",
+    "http://localhost:3001",
+    "https://edufusion-frontend.vercel.app/"
 ]
 
 
