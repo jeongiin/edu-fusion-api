@@ -3,6 +3,7 @@ from app.models import TextResult, QuizResult
 from app.apikey import OPENAI_API_KEY
 from app.recap_generator import *
 from app.chatgpt import *
+from app.utils import *
 
     
 def generate_init_quiz(recap: str) -> str:
@@ -33,11 +34,11 @@ def generate_init_quiz(recap: str) -> str:
 
 def generate_quiz(user_request: UserRequest) -> TextResult:
     answer_result = QuizResult()
-    base_file_path = os.path.join(os.getcwd(), "app", "data", user_request.edu_class_folder_name, user_request.edu_title_file_name)
+    base_file_path = create_base_path(user_request.edu_class_folder_name, user_request.edu_title_file_name)
     quizzes = {}
     try:
         init_recap = generate_init_recap(base_file_path=base_file_path)
-        ko_init_quiz = format_recap(init_recap)
+        ko_init_quiz = format_recap(init_recap, base_file_path=base_file_path)
         init_quiz = generate_init_quiz(ko_init_quiz)
 
         init_quiz_list = init_quiz.split('\n')
