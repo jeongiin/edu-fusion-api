@@ -9,32 +9,43 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.docstore.document import Document
 import openai
 from os import path
-from app.utils import en_to_ko, save_txt_file
-from app.models import UserRequest, TextResult
-from app.apikey import OPENAI_API_KEY
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
-def format_recap(unformated_recap: str) -> str:
+## for docker build
+from app.utils import *
+from app.models import UserRequest, TextResult
+from app.chatgpt import *
+from app.apikey import OPENAI_API_KEY
+
+## for develop environment
+# from utils import *
+# from models import UserRequest, TextResult
+# from chatgpt import *
+# from apikey import OPENAI_API_KEY
+
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY # openai 에서 발급 받은 key 입력
+
+
+def format_recap(unformated_recap: str, base_file_path: str) -> str:
     # 어투 설정, 자연스러운 번역
     # unformated_recap = en_to_ko(unformated_recap) # 보다 chatGPT가 더 매끄럽게 번역함
-    prompt = '공손한 어투의 한국어로 자연스럽게 작성해줘.' + "\n === \n"
-    prompt += unformated_recap
-    
-    # openai API 키 인증
-    openai.api_key = OPENAI_API_KEY
+    recap_save_path = base_file_path[:-4] + "_recap_ko.txt"
+    if path.exists(recap_save_path):
+        print("[EXISTS OK] " + recap_save_path)
+        file = open(recap_save_path, "r")
+        answer = file.read()
+         
+    else:
+        prompt = '공손한 어투의 한국어로 자연스럽게 작성해줘.' + "\n === \n"
+        prompt += unformated_recap
 
-    # 메시지 설정하기
-    messages = [
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt}
-    ]
+        # 메시지 설정하기
+        messages = [
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+        ]
 
-    # ChatGPT API 호출하기
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages
-    )
-    answer = response['choices'][0]['message']['content']
+        answer = ChatGPT(messages=messages)
+        save_txt_file(recap_save_path,answer)
     
     return answer
 
@@ -76,9 +87,9 @@ def generate_init_recap(base_file_path: str) -> str:
 
 def generate_recap(user_request: UserRequest) -> TextResult:
      answer_result = TextResult()
-     base_file_path = os.path.join(os.getcwd(), "app", "data", user_request.edu_class_folder_name, user_request.edu_title_file_name)
+     base_file_path = create_base_path(user_request.edu_class_folder_name, user_request.edu_title_file_name)
      generated_recap = generate_init_recap(base_file_path = base_file_path)
-     fommated_recap = format_recap(unformated_recap = generated_recap)
+     fommated_recap = format_recap(unformated_recap = generated_recap, base_file_path=base_file_path)
      # pdf 를 기반으로 답변 생성
      try:
          generated_recap = generate_init_recap(base_file_path = base_file_path)

@@ -3,8 +3,15 @@ from langchain.document_loaders import PyPDFLoader
 from langchain.indexes import VectorstoreIndexCreator
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.document_loaders import TextLoader
+
+## for docker build
 from app.models import UserRequest, TextResult
 from app.apikey import OPENAI_API_KEY
+
+## for development environment
+# from models import UserRequest, TextResult
+# from apikey import OPENAI_API_KEY
+
 import os
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY # openai 에서 발급 받은 key 입력
 

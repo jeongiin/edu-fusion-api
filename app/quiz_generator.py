@@ -1,10 +1,20 @@
 import os
-import openai
-from os import path
+
+## for docker build
 from app.models import TextResult, QuizResult
 from app.apikey import OPENAI_API_KEY
 from app.recap_generator import *
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+from app.chatgpt import *
+from app.utils import *
+
+## for development environment
+# from models import TextResult, QuizResult
+# from apikey import OPENAI_API_KEY
+# from recap_generator import *
+# from chatgpt import *
+# from utils import *
+
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY # openai 에서 발급 받은 key 입력
 
     
 def generate_init_quiz(recap: str) -> str:
@@ -20,8 +30,6 @@ def generate_init_quiz(recap: str) -> str:
 
     prompt += recap
     
-    # openai API 키 인증
-    openai.api_key = OPENAI_API_KEY
 
     # 메시지 설정하기
     messages = [
@@ -29,23 +37,19 @@ def generate_init_quiz(recap: str) -> str:
             {"role": "user", "content": prompt}
     ]
 
-    # ChatGPT API 호출하기
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages
-    )
-    answer = response['choices'][0]['message']['content']
+    answer = ChatGPT(messages=messages)
+
     
     return answer
 
 
 def generate_quiz(user_request: UserRequest) -> TextResult:
     answer_result = QuizResult()
-    base_file_path = os.path.join(os.getcwd(), "app", "data", user_request.edu_class_folder_name, user_request.edu_title_file_name)
+    base_file_path = create_base_path(user_request.edu_class_folder_name, user_request.edu_title_file_name)
     quizzes = {}
     try:
         init_recap = generate_init_recap(base_file_path=base_file_path)
-        ko_init_quiz = format_recap(init_recap)
+        ko_init_quiz = format_recap(init_recap, base_file_path=base_file_path)
         init_quiz = generate_init_quiz(ko_init_quiz)
 
         init_quiz_list = init_quiz.split('\n')
