@@ -6,13 +6,13 @@ class UserRequest(BaseModel):
     edu_title_file_name: Optional[str] = '메신저_피싱.txt' # edu 자료 파일 이름(대본 txt, 자료 pdf)
     request_type: Optional[str] # answer, quiz, recap, debat 
     request_contents: Optional[str] = '' # debat, answer 요청일 때만 활성화
-    state: Optional[str] = []
+    state: Optional[str] = '[]'
     recap_option: Optional[int] = -1 # recap 요청일 때만 활성화, 몇 줄로 요약?
     quize_option: Optional[int] = -1 # quiz 요청일 때만 활성화, 몇 개의 퀴즈 생성?
 
 class TextResult(BaseModel):
     emotion: Optional[str] = '' # happy, sad ...
-    state: Optional[str] = [] # debat
+    state: Optional[str] = '[]' # debat
     topic: Optional[str] = '' # debat
     txt_result: Optional[str] = '' # when answer, dabat, recap
 
