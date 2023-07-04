@@ -1,9 +1,9 @@
 import openai
 ## for docker build
-# from app.apikey import OPENAI_API_KEY
+from app.apikey import OPENAI_API_KEY
 
 ## for devlopment environment
-from apikey import OPENAI_API_KEY
+# from apikey import OPENAI_API_KEY
 
 # def ChatGPT(prompt, engine = 'text-davinci-003'):
 #     # api key 세팅
