@@ -88,14 +88,13 @@ def generate_init_recap(base_file_path: str) -> str:
 def generate_recap(user_request: UserRequest) -> TextResult:
      answer_result = TextResult()
      base_file_path = create_base_path(user_request.edu_class_folder_name, user_request.edu_title_file_name)
-     generated_recap = generate_init_recap(base_file_path = base_file_path)
-     fommated_recap = format_recap(unformated_recap = generated_recap, base_file_path=base_file_path)
+
      # pdf 를 기반으로 답변 생성
      try:
          generated_recap = generate_init_recap(base_file_path = base_file_path)
-         formmated_recap = format_recap(unformated_recap = generated_recap)
-         print(formmated_recap)
-         answer_result.txt_result = fommated_recap
+         formmated_recap = format_recap(unformated_recap=generated_recap, base_file_path=base_file_path)
+
+         answer_result.txt_result = formmated_recap
 
      except Exception as err:
          print('[ERROR][GENERATE_RECAP] : ', str(err))
