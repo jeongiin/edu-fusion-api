@@ -106,7 +106,9 @@ if __name__ == '__main__':
     # base_file_path = '/data/디지털_트렌드/디지털트렌드_1. 메타버스.pdf'
     
     ## txt 기반 방법
-    base_file_path = os.path.join(os.getcwd(),"app", "data", "시니어_디지털_범죄", "메신저 피싱.txt") 
+    user_request = UserRequest()
+    base_file_path = create_base_path(user_request.edu_class_folder_name, user_request.edu_title_file_name)
+
     
     generated_recap = generate_init_recap(base_file_path = base_file_path)
     # generated_recap = 'Messenger phishing is a type of digital crime that takes advantage of social networks to send messages that appear to come from someone close to the victim. The messages often start with something familiar and ask for personal information or to purchase something. It is important to be aware of these tactics and to be suspicious of any messages that appear to come from someone close to you.'

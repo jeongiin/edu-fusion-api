@@ -7,10 +7,12 @@ from langchain.document_loaders import TextLoader
 ## for docker build
 from app.models import UserRequest, TextResult
 from app.apikey import OPENAI_API_KEY
+from app.utils import *
 
 ## for development environment
 # from models import UserRequest, TextResult
 # from apikey import OPENAI_API_KEY
+# from utils import *
 
 import os
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY # openai 에서 발급 받은 key 입력
@@ -20,7 +22,8 @@ os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY # openai 에서 발급 받은 key 
 def generate_answer(user_request: UserRequest) -> TextResult:
      answer_result = TextResult()
      user_input = user_request.request_contents
-     base_file_path = os.path.join(os.getcwd(), "app", "data", user_request.edu_class_folder_name, user_request.edu_title_file_name)
+     base_file_path = create_base_path(user_request.edu_class_folder_name, user_request.edu_title_file_name)
+     
      if ".pdf" in base_file_path:
          loader = PyPDFLoader(base_file_path)
      elif ".txt" in base_file_path:

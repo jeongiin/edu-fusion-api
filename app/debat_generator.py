@@ -37,8 +37,7 @@ def generate_debat_answer(state, text):
 
 def generate_debat(user_request: UserRequest) -> TextResult:
     answer_result = TextResult()
-    base_file_path = create_base_path(user_request.edu_class_folder_name, user_request.edu_title_file_name
-    )
+    base_file_path = create_base_path(user_request.edu_class_folder_name, user_request.edu_title_file_name)
     state = eval(user_request.state)
     try:
             # 1. 첫 문자열이 비었을 경우 토론 주제 생성
