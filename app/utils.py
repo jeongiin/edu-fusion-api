@@ -17,5 +17,7 @@ def save_txt_file(save_path : str,text : str):
     file.close()
 
 def create_base_path(edu_class_folder_name, edu_title_file_name):
-    base_path = os.path.join(os.getcwd(), "app", "data", edu_class_folder_name, edu_title_file_name)   
+    # base_path = os.path.join(os.getcwd(), "app", "data", edu_class_folder_name, edu_title_file_name)   # docker
+    base_path = os.path.join(os.getcwd(), "data", edu_class_folder_name, edu_title_file_name)   # docker
+    
     return base_path
