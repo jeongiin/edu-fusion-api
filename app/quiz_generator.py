@@ -1,18 +1,18 @@
 import os
 
 ## for docker build
-# from app.models import TextResult, QuizResult
-# from app.apikey import OPENAI_API_KEY
-# from app.recap_generator import *
-# from app.chatgpt import *
-# from app.utils import *
+from app.models import TextResult, QuizResult
+from app.apikey import OPENAI_API_KEY
+from app.recap_generator import *
+from app.chatgpt import *
+from app.utils import *
 
 ## for development environment
-from models import TextResult, QuizResult
-from apikey import OPENAI_API_KEY
-from recap_generator import *
-from chatgpt import *
-from utils import *
+# from models import TextResult, QuizResult
+# from apikey import OPENAI_API_KEY
+# from recap_generator import *
+# from chatgpt import *
+# from utils import *
 
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY # openai 에서 발급 받은 key 입력
 

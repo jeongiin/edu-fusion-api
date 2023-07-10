@@ -1,15 +1,15 @@
 import os
 ## for docker build
-# from app.models import TextResult
-# from app.recap_generator import *
-# from app.chatgpt import *
-# from app.utils import *
+from app.models import TextResult
+from app.recap_generator import *
+from app.chatgpt import *
+from app.utils import *
 
 ## for development environment
-from models import *
-from recap_generator import *
-from chatgpt import *
-from utils import *
+# from models import *
+# from recap_generator import *
+# from chatgpt import *
+# from utils import *
 
 
 def make_messages(role, content):

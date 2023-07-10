@@ -7,17 +7,18 @@ from langchain.indexes import VectorstoreIndexCreator
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-# from app.answer_generator import *
-# from app.recap_generator import *
-# from app.quiz_generator import *
-# from app.debat_generator import *
-# from app.apikey import OPENAI_API_KEY
 
-from answer_generator import *
-from recap_generator import *
-from quiz_generator import *
-from debat_generator import *
-from apikey import OPENAI_API_KEY
+from app.answer_generator import *
+from app.recap_generator import *
+from app.quiz_generator import *
+from app.debat_generator import *
+from app.apikey import OPENAI_API_KEY
+
+# from answer_generator import *
+# from recap_generator import *
+# from quiz_generator import *
+# from debat_generator import *
+# from apikey import OPENAI_API_KEY
 
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 

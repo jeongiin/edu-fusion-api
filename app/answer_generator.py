@@ -5,14 +5,14 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.document_loaders import TextLoader
 
 ## for docker build
-# from app.models import UserRequest, TextResult
-# from app.apikey import OPENAI_API_KEY
-# from app.utils import *
+from app.models import UserRequest, TextResult
+from app.apikey import OPENAI_API_KEY
+from app.utils import *
 
 ## for development environment
-from models import UserRequest, TextResult
-from apikey import OPENAI_API_KEY
-from utils import *
+# from models import UserRequest, TextResult
+# from apikey import OPENAI_API_KEY
+# from utils import *
 
 import os
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY # openai 에서 발급 받은 key 입력
