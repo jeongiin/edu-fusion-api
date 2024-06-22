@@ -59,6 +59,7 @@
 <br/>
 
 <h2>💁 팀원 소개</h2>
+
 - Front-End : [@myunbongs](https://github.com/myunbongs/story-factory-frontend)
 - Back-End & AI : [@timdalxx](https://github.com/jeongiin/story-factory-api)
 
